@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e50573f-f3c1-4278-a444-1ed3ca2b36e7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/kalen.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crawler/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crawler/announce_server.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crawler/index_worker.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/bencode.py" afterPath="$PROJECT_DIR$/crawler/bencode.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/ltMetadata.py" afterPath="$PROJECT_DIR$/crawler/ltMetadata.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/metadata.py" afterPath="$PROJECT_DIR$/crawler/metadata.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/metautils.py" afterPath="$PROJECT_DIR$/crawler/metautils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/simMetadata.py" afterPath="$PROJECT_DIR$/crawler/simMetadata.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/crawler/script/dht_autorestart.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/crawler/script/dht_run.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/simdht_worker.py" afterPath="$PROJECT_DIR$/crawler/simdht_worker.py" />
     </list>
     <ignored path="DHTCrawler.iws" />
@@ -43,8 +32,8 @@
       <file leaf-file-name="simMetadata.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crawler/simMetadata.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.074074">
-              <caret line="147" column="24" selection-start-line="147" selection-start-column="22" selection-end-line="147" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="147" column="24" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
               <folding>
                 <element signature="e#40#53#0" expanded="true" />
               </folding>
@@ -66,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bencode.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bencode.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crawler/bencode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7868163">
+            <state vertical-scroll-proportion="0.0">
               <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
               <folding />
             </state>
@@ -89,23 +78,33 @@
       <file leaf-file-name="simdht_worker.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crawler/simdht_worker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.5185184">
-              <caret line="320" column="54" selection-start-line="320" selection-start-column="48" selection-end-line="320" selection-end-column="54" />
+            <state vertical-scroll-proportion="-7.111111">
+              <caret line="325" column="35" selection-start-line="325" selection-start-column="35" selection-end-line="325" selection-end-column="35" />
               <folding>
                 <element signature="e#164#173#0" expanded="true" />
-                <marker date="1456368207000" expanded="true" signature="8619:8664" placeholder="SELECT id FR... search_hash" />
-                <marker date="1456368207000" expanded="true" signature="8840:8915" placeholder="UPDATE searc... " />
-                <marker date="1456368207000" expanded="true" signature="9621:9863" placeholder="INSERT INTO search_statusreport... " />
+                <marker date="1456372167000" expanded="true" signature="8610:8655" placeholder="SELECT id FR... search_hash" />
+                <marker date="1456372167000" expanded="true" signature="8831:8906" placeholder="UPDATE searc... " />
+                <marker date="1456372167000" expanded="true" signature="9612:9854" placeholder="INSERT INTO search_statusreport... " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LICENSE" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/LICENSE">
+      <file leaf-file-name="dht_run.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/crawler/script/dht_run.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dht_autorestart.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/crawler/script/dht_autorestart.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.026647966">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -159,10 +158,12 @@
         <option value="$PROJECT_DIR$/crawler/index_worker.py" />
         <option value="$PROJECT_DIR$/crawler/bencode.py" />
         <option value="$PROJECT_DIR$/crawler/announce_server.py" />
-        <option value="$PROJECT_DIR$/crawler/simdht_worker.py" />
         <option value="$PROJECT_DIR$/crawler/metadata.py" />
         <option value="$PROJECT_DIR$/web/index.php" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/crawler/simdht_worker.py" />
+        <option value="$PROJECT_DIR$/crawler/script/dht_run.sh" />
+        <option value="$PROJECT_DIR$/crawler/script/dht_autorestart.sh" />
       </list>
     </option>
   </component>
@@ -285,6 +286,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="crawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DHTCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DHTCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="script" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -586,9 +605,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#164#173#0" expanded="true" />
-            <marker date="1456368207000" expanded="true" signature="8619:8664" placeholder="SELECT id FR... search_hash" />
-            <marker date="1456368207000" expanded="true" signature="8840:8915" placeholder="UPDATE searc... " />
-            <marker date="1456368207000" expanded="true" signature="9621:9863" placeholder="INSERT INTO search_statusreport... " />
+            <marker date="1456372167000" expanded="true" signature="8610:8655" placeholder="SELECT id FR... search_hash" />
+            <marker date="1456372167000" expanded="true" signature="8831:8906" placeholder="UPDATE searc... " />
+            <marker date="1456372167000" expanded="true" signature="9612:9854" placeholder="INSERT INTO search_statusreport... " />
           </folding>
         </state>
       </provider>
@@ -641,29 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/simdht_worker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5185184">
-          <caret line="320" column="54" selection-start-line="320" selection-start-column="48" selection-end-line="320" selection-end-column="54" />
-          <folding>
-            <element signature="e#164#173#0" expanded="true" />
-            <marker date="1456368207000" expanded="true" signature="8619:8664" placeholder="SELECT id FR... search_hash" />
-            <marker date="1456368207000" expanded="true" signature="8840:8915" placeholder="UPDATE searc... " />
-            <marker date="1456368207000" expanded="true" signature="9621:9863" placeholder="INSERT INTO search_statusreport... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/simMetadata.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.074074">
-          <caret line="147" column="24" selection-start-line="147" selection-start-column="22" selection-end-line="147" selection-end-column="24" />
-          <folding>
-            <element signature="e#40#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/crawler/metautils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -698,8 +694,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crawler/bencode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7868163">
+        <state vertical-scroll-proportion="0.0">
           <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler/simMetadata.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="147" column="24" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
+          <folding>
+            <element signature="e#40#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler/simdht_worker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.111111">
+          <caret line="325" column="35" selection-start-line="325" selection-start-column="35" selection-end-line="325" selection-end-column="35" />
+          <folding>
+            <element signature="e#164#173#0" expanded="true" />
+            <marker date="1456372167000" expanded="true" signature="8610:8655" placeholder="SELECT id FR... search_hash" />
+            <marker date="1456372167000" expanded="true" signature="8831:8906" placeholder="UPDATE searc... " />
+            <marker date="1456372167000" expanded="true" signature="9612:9854" placeholder="INSERT INTO search_statusreport... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler/script/dht_run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler/script/dht_autorestart.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.026647966">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>

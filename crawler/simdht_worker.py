@@ -38,7 +38,7 @@ from metadata import save_metadata
 
 DB_HOST = '127.0.0.1'
 DB_USER = 'root'
-DB_PASS = 'l82566258'
+DB_PASS = ''
 DB_NAME = 'dht'
 BOOTSTRAP_NODES = (
     ("router.bittorrent.com", 6881),
