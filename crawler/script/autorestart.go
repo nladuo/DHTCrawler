@@ -20,7 +20,7 @@ var (
 
 func main() {
 	for {
-		cmd := exec.Command("/usr/bin/wc", "-l", "log.out")
+		cmd := exec.Command("/usr/bin/wc", "-l", "dht.out")
 
 		outW, err := cmd.StdoutPipe()
 		if err != nil {
