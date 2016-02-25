@@ -2,7 +2,6 @@
 import traceback
 import pygeoip
 import threading
-import socket
 import sys
 import hashlib
 import datetime
@@ -10,7 +9,7 @@ import time
 import json
 
 import metautils
-from bencode import bencode, bdecode
+from bencode import bdecode
 geoip = pygeoip.GeoIP('GeoIP.dat')
 
 
