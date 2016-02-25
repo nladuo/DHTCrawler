@@ -6,14 +6,11 @@ xiaoxia@xiaoxia.org
 2015.6 Forked CreateChen's Project: https://github.com/CreateChen/simDownloader
 """
 
-import hashlib
 import os
 import SimpleXMLRPCServer
 import time
 import datetime
-import traceback
 import sys
-import json
 import socket
 import threading
 from hashlib import sha1
@@ -35,7 +32,6 @@ except:
     lt = None
     print sys.exc_info()[1]
 
-import metautils
 import simMetadata
 from bencode import bencode, bdecode
 from metadata import save_metadata
@@ -61,6 +57,7 @@ geoip = pygeoip.GeoIP('GeoIP.dat')
 
 def is_ip_allowed(ip):
     return geoip.country_code_by_addr(ip) not in ('CN','TW','HK')
+
 
 def entropy(length):
     return "".join(chr(randint(0, 255)) for _ in xrange(length))
@@ -132,14 +129,14 @@ class DHTClient(Thread):
         }
         self.send_krpc(msg, address)
 
-    def join_DHT(self):
+    def join_dht(self):
         for address in BOOTSTRAP_NODES:
             self.send_find_node(address)
 
-    def re_join_DHT(self):
+    def re_join_dht(self):
         if len(self.nodes) == 0:
-            self.join_DHT()
-        timer(RE_JOIN_DHT_INTERVAL, self.re_join_DHT)
+            self.join_dht()
+        timer(RE_JOIN_DHT_INTERVAL, self.re_join_dht)
 
     def auto_send_find_node(self):
         wait = 1.0 / self.max_node_qsize
@@ -181,11 +178,10 @@ class DHTServer(DHTClient):
         self.ufd = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.ufd.bind((self.bind_ip, self.bind_port))
 
-        timer(RE_JOIN_DHT_INTERVAL, self.re_join_DHT)
-
+        timer(RE_JOIN_DHT_INTERVAL, self.re_join_dht)
 
     def run(self):
-        self.re_join_DHT()
+        self.re_join_dht()
         while True:
             try:
                 (data, address) = self.ufd.recvfrom(65536)
@@ -301,7 +297,6 @@ class Master(Thread):
         save_metadata(self.dbcurr, binhash, address, start_time, data)
         self.n_new += 1
 
-
     def run(self):
         self.name = threading.currentThread().getName()
         print self.name, 'started'
@@ -330,16 +325,20 @@ class Master(Thread):
                 # 更新最近发现时间，请求数
                 self.dbcurr.execute('UPDATE search_hash SET last_seen=%s, requests=requests+1 WHERE info_hash=%s', (utcnow, info_hash))
             else:
-                if dtype == 'pt':
-                    t = threading.Thread(target=simMetadata.download_metadata, args=(address, binhash, self.metadata_queue))
-                    t.setDaemon(True)
-                    t.start()
-                    self.n_downloading_pt += 1
-                elif dtype == 'lt' and self.n_downloading_lt < MAX_QUEUE_LT:
-                    t = threading.Thread(target=ltMetadata.download_metadata, args=(address, binhash, self.metadata_queue))
-                    t.setDaemon(True)
-                    t.start()
-                    self.n_downloading_lt += 1
+                try:
+                    if dtype == 'pt':
+                        t = threading.Thread(target=simMetadata.download_metadata, args=(address, binhash, self.metadata_queue))
+                        t.setDaemon(True)
+                        t.start()
+                        self.n_downloading_pt += 1
+                    elif dtype == 'lt' and self.n_downloading_lt < MAX_QUEUE_LT:
+                        t = threading.Thread(target=ltMetadata.download_metadata, args=(address, binhash, self.metadata_queue))
+                        t.setDaemon(True)
+                        t.start()
+                        self.n_downloading_lt += 1
+                except Exception, e:
+                    print e, ", sleep 5 seconds."
+                    sleep(5)  # 睡眠5秒
 
             if self.n_reqs >= 1000:
                 self.dbcurr.execute('INSERT INTO search_statusreport(date,new_hashes,total_requests, valid_requests)  VALUES(%s,%s,%s,%s) ON DUPLICATE KEY UPDATE ' +

@@ -13,6 +13,7 @@ import metautils
 from bencode import bencode, bdecode
 geoip = pygeoip.GeoIP('GeoIP.dat')
 
+
 def decode(encoding, s):
     if type(s) is list:
         s = ';'.join(s)
@@ -25,10 +26,12 @@ def decode(encoding, s):
             pass
     return s.decode(encoding, 'ignore')
 
+
 def decode_utf8(encoding, d, i):
     if i+'.utf-8' in d:
         return d[i+'.utf-8'].decode('utf8')
     return decode(encoding, d[i])
+
 
 def parse_metadata(data):
     info = {}
