@@ -6,11 +6,14 @@ xiaoxia@xiaoxia.org
 2015.6 Forked CreateChen's Project: https://github.com/CreateChen/simDownloader
 """
 
+import hashlib
 import os
 import SimpleXMLRPCServer
 import time
 import datetime
+import traceback
 import sys
+import json
 import socket
 import threading
 from hashlib import sha1
@@ -32,6 +35,7 @@ except:
     lt = None
     print sys.exc_info()[1]
 
+import metautils
 import simMetadata
 from bencode import bencode, bdecode
 from metadata import save_metadata
@@ -55,11 +59,10 @@ MAX_QUEUE_PT = 200
 geoip = pygeoip.GeoIP('GeoIP.dat')
 
 
-def is_ip_allowed(ip):  # 获取DHT服务器的地点
+def is_ip_allowed(ip):
     return geoip.country_code_by_addr(ip) not in ('CN','TW','HK')
 
-
-def entropy(length):    # 提供随机字符串
+def entropy(length):
     return "".join(chr(randint(0, 255)) for _ in xrange(length))
 
 
@@ -129,14 +132,14 @@ class DHTClient(Thread):
         }
         self.send_krpc(msg, address)
 
-    def join_dht(self):
+    def join_DHT(self):
         for address in BOOTSTRAP_NODES:
             self.send_find_node(address)
 
-    def re_join_dht(self):
+    def re_join_DHT(self):
         if len(self.nodes) == 0:
-            self.join_dht()
-        timer(RE_JOIN_DHT_INTERVAL, self.re_join_dht)
+            self.join_DHT()
+        timer(RE_JOIN_DHT_INTERVAL, self.re_join_DHT)
 
     def auto_send_find_node(self):
         wait = 1.0 / self.max_node_qsize
@@ -178,10 +181,11 @@ class DHTServer(DHTClient):
         self.ufd = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.ufd.bind((self.bind_ip, self.bind_port))
 
-        timer(RE_JOIN_DHT_INTERVAL, self.re_join_dht)
+        timer(RE_JOIN_DHT_INTERVAL, self.re_join_DHT)
+
 
     def run(self):
-        self.re_join_dht()
+        self.re_join_DHT()
         while True:
             try:
                 (data, address) = self.ufd.recvfrom(65536)
@@ -296,6 +300,7 @@ class Master(Thread):
 
         save_metadata(self.dbcurr, binhash, address, start_time, data)
         self.n_new += 1
+
 
     def run(self):
         self.name = threading.currentThread().getName()
