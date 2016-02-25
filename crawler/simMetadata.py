@@ -2,31 +2,33 @@
 # encoding: utf-8
 import socket
 import math
-from struct import pack, unpack
-from socket import inet_ntoa
-from threading import Timer, Thread
+from struct import pack
 from time import sleep, time
 from hashlib import sha1
 
 from simdht_worker import entropy
-from bencode import bencode, bdecode
+from bencode import bencode
 
 
 BT_PROTOCOL = "BitTorrent protocol"
 BT_MSG_ID = 20
 EXT_HANDSHAKE_ID = 0
 
+
 def random_id():
     hash = sha1()
     hash.update(entropy(20))
     return hash.digest()
 
+
 def send_packet(the_socket, msg):
     the_socket.send(msg)
+
 
 def send_message(the_socket, msg):
     msg_len = pack(">I", len(msg))
     send_packet(the_socket, msg_len + msg)
+
 
 def send_handshake(the_socket, infohash):
     bt_header = chr(len(BT_PROTOCOL)) + BT_PROTOCOL
@@ -35,6 +37,7 @@ def send_handshake(the_socket, infohash):
     packet = bt_header + ext_bytes + infohash + peer_id
 
     send_packet(the_socket, packet)
+
 
 def check_handshake(packet, self_infohash):
     try:
@@ -55,25 +58,30 @@ def check_handshake(packet, self_infohash):
 
     return True
 
+
 def send_ext_handshake(the_socket):
     msg = chr(BT_MSG_ID) + chr(EXT_HANDSHAKE_ID) + bencode({"m":{"ut_metadata": 1}})
     send_message(the_socket, msg)
+
 
 def request_metadata(the_socket, ut_metadata, piece):
     """bep_0009"""
     msg = chr(BT_MSG_ID) + chr(ut_metadata) + bencode({"msg_type": 0, "piece": piece})
     send_message(the_socket, msg)
 
+
 def get_ut_metadata(data):
     ut_metadata = "_metadata"
     index = data.index(ut_metadata)+len(ut_metadata) + 1
     return int(data[index])
+
 
 def get_metadata_size(data):
     metadata_size = "metadata_size"
     start = data.index(metadata_size) + len(metadata_size) + 1
     data = data[start:]
     return int(data[:data.index("e")])
+
 
 def recvall(the_socket, timeout=5):
     the_socket.setblocking(0)
@@ -95,6 +103,7 @@ def recvall(the_socket, timeout=5):
         except Exception:
             pass
     return "".join(total_data)
+
 
 def download_metadata(address, infohash, metadata_queue, timeout=5):
     metadata = None
@@ -118,7 +127,7 @@ def download_metadata(address, infohash, metadata_queue, timeout=5):
 
         # get ut_metadata and metadata_size
         ut_metadata, metadata_size = get_ut_metadata(packet), get_metadata_size(packet)
-        #print 'ut_metadata_size: ', metadata_size
+        # print 'ut_metadata_size: ', metadata_size
 
         # request each piece of metadata
         metadata = []
@@ -128,12 +137,12 @@ def download_metadata(address, infohash, metadata_queue, timeout=5):
             metadata.append(packet[packet.index("ee")+2:])
 
         metadata = "".join(metadata)
-        #print 'Fetched', bdecode(metadata)["name"], "size: ", len(metadata)
+        # print 'Fetched', bdecode(metadata)["name"], "size: ", len(metadata)
 
     except socket.timeout:
         pass
     except Exception, e:
-        pass #print e
+        pass # print e
 
     finally:
         the_socket.close()

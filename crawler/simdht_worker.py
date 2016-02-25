@@ -6,14 +6,11 @@ xiaoxia@xiaoxia.org
 2015.6 Forked CreateChen's Project: https://github.com/CreateChen/simDownloader
 """
 
-import hashlib
 import os
 import SimpleXMLRPCServer
 import time
 import datetime
-import traceback
 import sys
-import json
 import socket
 import threading
 from hashlib import sha1
@@ -35,14 +32,14 @@ except:
     lt = None
     print sys.exc_info()[1]
 
-import metautils
 import simMetadata
 from bencode import bencode, bdecode
 from metadata import save_metadata
 
 DB_HOST = '127.0.0.1'
 DB_USER = 'root'
-DB_PASS = ''
+DB_PASS = 'l82566258'
+DB_NAME = 'dht'
 BOOTSTRAP_NODES = (
     ("router.bittorrent.com", 6881),
     ("dht.transmissionbt.com", 6881),
@@ -58,10 +55,11 @@ MAX_QUEUE_PT = 200
 geoip = pygeoip.GeoIP('GeoIP.dat')
 
 
-def is_ip_allowed(ip):
+def is_ip_allowed(ip):  # 获取DHT服务器的地点
     return geoip.country_code_by_addr(ip) not in ('CN','TW','HK')
 
-def entropy(length):
+
+def entropy(length):    # 提供随机字符串
     return "".join(chr(randint(0, 255)) for _ in xrange(length))
 
 
@@ -131,14 +129,14 @@ class DHTClient(Thread):
         }
         self.send_krpc(msg, address)
 
-    def join_DHT(self):
+    def join_dht(self):
         for address in BOOTSTRAP_NODES:
             self.send_find_node(address)
 
-    def re_join_DHT(self):
+    def re_join_dht(self):
         if len(self.nodes) == 0:
-            self.join_DHT()
-        timer(RE_JOIN_DHT_INTERVAL, self.re_join_DHT)
+            self.join_dht()
+        timer(RE_JOIN_DHT_INTERVAL, self.re_join_dht)
 
     def auto_send_find_node(self):
         wait = 1.0 / self.max_node_qsize
@@ -180,11 +178,10 @@ class DHTServer(DHTClient):
         self.ufd = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.ufd.bind((self.bind_ip, self.bind_port))
 
-        timer(RE_JOIN_DHT_INTERVAL, self.re_join_DHT)
-
+        timer(RE_JOIN_DHT_INTERVAL, self.re_join_dht)
 
     def run(self):
-        self.re_join_DHT()
+        self.re_join_dht()
         while True:
             try:
                 (data, address) = self.ufd.recvfrom(65536)
@@ -279,7 +276,7 @@ class Master(Thread):
         self.setDaemon(True)
         self.queue = Queue()
         self.metadata_queue = Queue()
-        self.dbconn = mdb.connect(DB_HOST, DB_USER, DB_PASS, 'ssbc', charset='utf8')
+        self.dbconn = mdb.connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, charset='utf8')
         self.dbconn.autocommit(False)
         self.dbcurr = self.dbconn.cursor()
         self.dbcurr.execute('SET NAMES utf8')
@@ -299,7 +296,6 @@ class Master(Thread):
 
         save_metadata(self.dbcurr, binhash, address, start_time, data)
         self.n_new += 1
-
 
     def run(self):
         self.name = threading.currentThread().getName()

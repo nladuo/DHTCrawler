@@ -11,10 +11,12 @@ cats = {
     u'software': u'Softwares',
 }
 
+
 def get_label(name):
     if name in cats:
         return cats[name]
     return u'Others'
+
 
 def get_label_by_crc32(n):
     for k in cats:
@@ -22,8 +24,10 @@ def get_label_by_crc32(n):
             return k
     return u'other'
 
+
 def get_extension(name):
     return os.path.splitext(name)[1]
+
 
 def get_category(ext):
     ext = ext + '.'
@@ -39,6 +43,7 @@ def get_category(ext):
         if ext in v:
             return k
     return u'other'
+
 
 def get_detail(y):
     if y.get('files'):

@@ -2,7 +2,6 @@
 import traceback
 import pygeoip
 import threading
-import socket
 import sys
 import hashlib
 import datetime
@@ -10,8 +9,9 @@ import time
 import json
 
 import metautils
-from bencode import bencode, bdecode
+from bencode import bdecode
 geoip = pygeoip.GeoIP('GeoIP.dat')
+
 
 def decode(encoding, s):
     if type(s) is list:
@@ -25,10 +25,12 @@ def decode(encoding, s):
             pass
     return s.decode(encoding, 'ignore')
 
+
 def decode_utf8(encoding, d, i):
     if i+'.utf-8' in d:
         return d[i+'.utf-8'].decode('utf8')
     return decode(encoding, d[i])
+
 
 def parse_metadata(data):
     info = {}
