@@ -1,15 +1,17 @@
 # coding: utf-8
-import traceback
-import pygeoip
-import threading
-import sys
-import hashlib
 import datetime
-import time
+import hashlib
 import json
+import sys
+import threading
+import time
+import traceback
+
+import pygeoip
 
 import metautils
 from bencode import bdecode
+
 geoip = pygeoip.GeoIP('GeoIP.dat')
 
 
